@@ -12,4 +12,4 @@ pip install pyyaml python-twitter
 ```
 python twitter-pull.py
 ```
-Tweets are saved into _data/tweet_dumps_ per default (one text file per run). Since the Twitter API limits how many keywords we are able to monitor at the same time, it picks a new set of 200 keywords every 30 minutes.
+Tweets (in the JSON format detailed [here](https://dev.twitter.com/overview/api/tweets)) are saved into _data/tweet_dumps_ per default (one text file per run). Since the Twitter API limits how many keywords we are able to monitor at the same time, it picks a new set of 200 keywords every 30 minutes.
