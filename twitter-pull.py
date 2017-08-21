@@ -1,4 +1,4 @@
-import twitter, yaml, os.path, sys, json, random
+import twitter, yaml, os.path, sys, json, random, codecs
 from time import gmtime, strftime, time
 
 def read_config():
@@ -30,8 +30,13 @@ def record_tweet_stream(twitter_api, tracked_words, output_file, time_limit_minu
 
     with open(output_file, 'w',encoding="utf-8") as f:
         for line in twitter_api.GetStreamFilter(track=tracked_words, languages=track_languages):
-            f.write(json.dumps(line))
-            f.write('\n')
+            #tweet = json.loads(line)
+            print(repr(line['timestamp_ms']).encode('utf-8'))
+            print(repr(line['text']).encode('utf-8'))
+            f.write(line['timestamp_ms'])
+            f.write('\r\n')
+            f.write(line['text'])
+            f.write('\r\n')
             if time() - time_start > time_limit_minutes * 60:
                 break
 
@@ -48,7 +53,7 @@ def main():
         output_filename = str.format("tweet_stream_{}.json",strftime("%Y%m%d_%H%M%S",gmtime()))
         output_file = os.path.join(config["twitter"]["output_dir"],output_filename)
 
-        record_tweet_stream(twitter_api, tracked_words, output_file)
+        record_tweet_stream(twitter_api, ['hello'], output_file)
 
 if __name__ == '__main__':
     main()
